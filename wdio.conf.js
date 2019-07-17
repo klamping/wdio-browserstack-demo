@@ -2,6 +2,42 @@ const debug = process.env.DEBUG === 'true';
 
 const mochaTimeout = debug ? 999999 : 60000;
 
+let capabilities = [{
+    //
+    browserName: 'firefox',
+    'bstack:options' : {
+        os: 'OS X',
+        osVersion: 'High Sierra',
+        resolution: '1280x1024',
+        projectName: 'Demo Run',
+        buildName: Date.now().toString(),
+        debug
+    },
+    // If outputDir is provided WebdriverIO can capture driver session logs
+    // it is possible to configure which logTypes to include/exclude.
+    // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+    // excludeDriverLogs: ['bugreport', 'server'],
+}, {
+    //
+    browserName: 'chrome',
+    'bstack:options' : {
+        os: 'OS X',
+        osVersion: 'High Sierra',
+        resolution: '1280x1024',
+        projectName: 'Demo Run',
+        buildName: Date.now().toString(),
+        debug
+    },
+    // If outputDir is provided WebdriverIO can capture driver session logs
+    // it is possible to configure which logTypes to include/exclude.
+    // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+    // excludeDriverLogs: ['bugreport', 'server'],
+}]
+
+if (debug) {
+    capabilities = [capabilities[0]]
+}
+
 exports.config = {
     hostname: 'hub-cloud.browserstack.com',
     protocol: 'http',
@@ -68,26 +104,7 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instances available you can make sure that not more than
-        // 5 instances get started at a time.
-        maxInstances: 5,
-        //
-        browserName: 'firefox',
-        'bstack:options' : {
-            os: 'OS X',
-            osVersion: 'High Sierra',
-            resolution: '1280x1024',
-            projectName: 'Demo Run',
-            buildName: Date.now().toString(),
-            debug
-        },
-        // If outputDir is provided WebdriverIO can capture driver session logs
-        // it is possible to configure which logTypes to include/exclude.
-        // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
-        // excludeDriverLogs: ['bugreport', 'server'],
-    }],
+    capabilities,
     //
     // ===================
     // Test Configurations
